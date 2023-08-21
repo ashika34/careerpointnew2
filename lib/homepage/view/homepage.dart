@@ -79,45 +79,34 @@ class _HomePageState extends State<HomePage>
         
 
 StreamBuilder<QuerySnapshot>(
-   stream: FirebaseFirestore.instance.collection('jobcollection').snapshots(),
-  builder: ( context, snapshot) {
-     if (snapshot.hasError) {
-            return Center(
-              child: Text('Error: ${snapshot.error}'),
-            );
-          }
+  stream: FirebaseFirestore.instance.collection('jobcollection').snapshots(),
+  builder: (context, snapshot) {
+    if (snapshot.hasError) {
+      return Center(
+        child: Text('Error: ${snapshot.error}'),
+      );
+    }
 
-           if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+    if (!snapshot.hasData) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
 
+    final jobDocs = snapshot.data!.docs as List<QueryDocumentSnapshot<Map<String, dynamic>>>;
 
-          //  List<DocumentSnapshot> jobDocs = snapshot.data!.docs;
-           final jobDocs = snapshot.data!.docs as List<QueryDocumentSnapshot<Map<String, dynamic>>>;
-          // Use jobDocs to build your UI
-          return Expanded(
-            child: ListView.builder(
-              itemCount: jobDocs.length,
-              itemBuilder: (context, index) {
-                // Access fields using jobDocs[index].data()
-                Map<String, dynamic> jobData = jobDocs[index].data() as Map<String, dynamic>;
-          
+    return Expanded(
+      child: ListView.builder(
+        itemCount: jobDocs.length,
+        itemBuilder: (context, index) {
+          Map<String, dynamic> jobData = jobDocs[index].data();
 
-
-          return MyCard(job: jobDocs[index]);
-                // return ListTile(
-                //   title: Text(jobData['job title'] as String),
-                 
-                //   // You can display more fields here
-                // );
-              },
-            ),
-          );
-
-  
-},),
+          return MyCard(job: jobData); // Assuming MyCard accepts Map<String, dynamic>
+        },
+      ),
+    );
+  },
+),
 
             
             // MyCard(),
@@ -199,4 +188,5 @@ StreamBuilder<QuerySnapshot>(
     );
   }
 }
+
 

@@ -7,14 +7,15 @@ import 'package:uuid/uuid.dart';
 
 class JobRepo {
   Future<void> addJob(
+  String companyname,
   String jobTitle, 
   String qualification, 
   String jobType,
   String jobLocation,
   String monthlySalary,
   String hiringProcess,
-  String jobDescription,
-BuildContext context) async {
+  String jobdescription,
+BuildContext context,) async {
     final uuid = Uuid();
     final jid = uuid.v4();
     final _auth = FirebaseAuth.instance;
@@ -23,13 +24,14 @@ BuildContext context) async {
     try {
      await _jobRef.doc(jid).set({
         'userid': _auth.currentUser!.uid,
+        'companyname':companyname,
         'job title': jobTitle,
         'qualification': qualification,
         'jobtype': jobType,
         'joblocation':jobLocation,
         'monthly salary':monthlySalary,
         'hiring process':hiringProcess,
-        'jobdescription':jobDescription,
+        'jobdescription':jobdescription,
         'jobid': jid,
         });
     } on FirebaseException catch (e) {

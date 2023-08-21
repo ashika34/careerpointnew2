@@ -6,7 +6,7 @@ import '../repo/signupemp_repo.dart';
 class EmpAccnt extends StatelessWidget {
   EmpAccnt({Key? key}) : super(key: key);
 
-  TextEditingController companyname = TextEditingController();
+  // TextEditingController companyname = TextEditingController();
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
@@ -54,23 +54,23 @@ class EmpAccnt extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 18),
-                TextFormField(
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Please fill this field";
-                    }
-                  },
-                  keyboardType: TextInputType.name,
-                  controller: companyname,
-                  decoration: InputDecoration(
-                    labelText: 'Your Company name',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(
-                      Icons.home,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
+                // TextFormField(
+                //   validator: (value) {
+                //     if (value!.isEmpty) {
+                //       return "Please fill this field";
+                //     }
+                //   },
+                //   keyboardType: TextInputType.name,
+                //   controller: companyname,
+                //   decoration: InputDecoration(
+                //     labelText: 'Your Company name',
+                //     border: OutlineInputBorder(),
+                //     prefixIcon: Icon(
+                //       Icons.home,
+                //       color: Colors.black,
+                //     ),
+                //   ),
+              //  ), 
                 SizedBox(height: 35),
                 TextFormField(
                   validator: (value) {
@@ -152,7 +152,7 @@ class EmpAccnt extends StatelessWidget {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         await SignupRepo().createUser(
-                          companyname.text,
+                          
                           name.text,
                           email.text,
                           password.text,

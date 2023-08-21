@@ -280,22 +280,24 @@ class Employers extends StatefulWidget {
 }
 
 class empjobdetail extends StatelessWidget {
+  final String companyname;
   final String jobTitle;
   final String qualification;
   final String jobType;
   final String jobLocation;
   final String monthlySalary;
   final String hiringProcess;
-  final String jobDescription;
+  final String jobdescription;
 
   empjobdetail({
+    required this.companyname,
     required this.jobTitle,
     required this.qualification,
     required this.jobType,
     required this.jobLocation,
     required this.monthlySalary,
     required this.hiringProcess,
-    required this.jobDescription,
+    required this.jobdescription,
   });
 
   @override
@@ -366,7 +368,7 @@ class empjobdetail extends StatelessWidget {
                 height: 20,
               ),
               Text(
-                'Job Description: $jobDescription',
+                'Job Description: $jobdescription',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
             ],
@@ -376,6 +378,7 @@ class empjobdetail extends StatelessWidget {
 }
 
 class _EmployersState extends State<Employers> {
+  TextEditingController companyname =TextEditingController();
   TextEditingController jobtitle = TextEditingController();
   TextEditingController qualification = TextEditingController();
   TextEditingController joblocation = TextEditingController();
@@ -424,6 +427,24 @@ class _EmployersState extends State<Employers> {
                 SizedBox(
                   height: 55,
                 ),
+                TextFormField(
+                  keyboardType: TextInputType.text,
+                  controller: companyname,
+                  decoration: InputDecoration(
+                    labelText: 'Companyname',
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a Companyname';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: 55,
+                ),
+                
                 TextFormField(
                   keyboardType: TextInputType.name,
                   controller: jobtitle,
@@ -564,13 +585,14 @@ class _EmployersState extends State<Employers> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => EmployerJd(
+                              companyname:companyname,
                                     jobTitle: jobtitle,
                                     qualification: qualification,
                                     jobType: jobtype,
                                     jobLocation: joblocation,
                                     monthlySalary: monthlysalary,
                                     hiringProcess: hiringprocess,
-                                    jobDescription: jobdescription,
+                                    jobdescription: jobdescription,
                                      )),
                         );
                       }

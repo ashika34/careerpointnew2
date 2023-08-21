@@ -6,23 +6,24 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class EmployerJd extends StatelessWidget {
+  final TextEditingController companyname;
   final TextEditingController jobTitle;
   final TextEditingController qualification;
   final TextEditingController jobType;
   final TextEditingController jobLocation;
   final TextEditingController monthlySalary;
   final TextEditingController hiringProcess;
-  final TextEditingController jobDescription;
-  
+  final TextEditingController jobdescription;
 
-  EmployerJd({
+ EmployerJd({
+    required this.companyname,
     required this.jobTitle,
     required this.qualification,
     required this.jobType,
     required this.jobLocation,
     required this.monthlySalary,
     required this.hiringProcess,
-    required this.jobDescription,
+    required this.jobdescription, 
   });
 
   @override
@@ -49,6 +50,39 @@ class EmployerJd extends StatelessWidget {
               SizedBox(
                 height: 28,
               ),
+              ListTile(
+                title: Text('Companyname'),
+                subtitle: Text(companyname.text),
+                trailing: IconButton(onPressed: () {
+                  showDialog(context: context,
+                   builder: (BuildContext context)
+                  {
+                    return AlertDialog(
+                      title: Text('Edit'),
+                      content: Column(
+                      children: [
+                        TextField(
+                          controller: companyname,
+                          decoration: InputDecoration(
+                            hintText: 'companyname',
+                          ),
+                        ),
+                        SizedBox(
+                          height: 23,
+                        ),
+                        ElevatedButton(onPressed: () {
+                          
+                        }, child: Text('Done')),
+                      ],
+                      ),
+                    );
+                  });
+                },  icon: Icon(Icons.edit), ), ),
+              
+              SizedBox(
+                height: 20,
+              ),
+
               ListTile(
                 title: Text('Job Title'),
                 subtitle: Text(jobTitle.text),
@@ -255,7 +289,7 @@ class EmployerJd extends StatelessWidget {
               ),
               ListTile(
                 title: Text('Job Description'),
-                subtitle: Text(jobDescription.text),
+                subtitle: Text(jobdescription.text),
                 trailing: IconButton(
                     onPressed: () {
                       showDialog(
@@ -266,7 +300,7 @@ class EmployerJd extends StatelessWidget {
                             content: Column(
                               children: [
                                 TextField(
-                                  controller: jobDescription,
+                                  controller: jobdescription,
                                   decoration: InputDecoration(
                                     hintText: 'jobdescription',
                                   ),
@@ -291,23 +325,27 @@ class EmployerJd extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: 50,
                 child: ElevatedButton(onPressed: () async{
-                 await JobRepo().addJob(jobTitle.text,
+                 await JobRepo().addJob(
+                 companyname.text,
+                 jobTitle.text,
                  qualification.text,
                  jobType.text,
                  jobLocation.text,
                  monthlySalary.text,
                  hiringProcess.text,
-                 jobDescription.text,
-                 context);
+                jobdescription.text,
+                context, 
+                  );
                  ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('Added successfully')),);
+                  companyname.clear();
                  jobTitle.clear();
                  qualification.clear();
                  jobType.clear();
                  jobLocation.clear();
                  monthlySalary.clear();
                  hiringProcess.clear();
-                 jobDescription.clear();
+                 jobdescription.clear();
                  }, 
                  child: Text('Confirm'),
                  style: ElevatedButton.styleFrom(

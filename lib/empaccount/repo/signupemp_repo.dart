@@ -5,7 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class SignupRepo {
-  Future<void> createUser(String companyname,
+  Future<void> createUser(
 String name,
 String email, 
 String password,
@@ -20,7 +20,6 @@ async {
           email: email, password: password);
       await userRef.doc(userCredential.user!.uid).set({
         'userid': _auth.currentUser!.uid,
-        'companyname':companyname,
         'username': name,
         'email': email,
         'password': password,
