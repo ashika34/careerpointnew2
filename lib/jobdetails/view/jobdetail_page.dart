@@ -235,10 +235,6 @@ class _JobDetailState extends State<JobDetail> {
     }));
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Application Submitted')));
 
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => JobDetail()),
-    // );
   },
   child: Text('Apply Now'),
   style: ElevatedButton.styleFrom(

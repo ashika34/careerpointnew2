@@ -75,9 +75,6 @@ class _HomePageState extends State<HomePage>
             SizedBox(
               height: 15,
             ),
-
-        
-
 StreamBuilder<QuerySnapshot>(
   stream: FirebaseFirestore.instance.collection('jobcollection').snapshots(),
   builder: (context, snapshot) {
@@ -86,7 +83,6 @@ StreamBuilder<QuerySnapshot>(
         child: Text('Error: ${snapshot.error}'),
       );
     }
-
     if (!snapshot.hasData) {
       return Center(
         child: CircularProgressIndicator(),

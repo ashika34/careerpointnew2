@@ -1,6 +1,8 @@
 import 'package:careerpoint2/jobdetails/jobdetails.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../../../homepage/repo/applyjobrepo.dart';
 
 class MyCard extends StatelessWidget {
   MyCard({
@@ -40,7 +42,7 @@ class MyCard extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 14),
+            SizedBox(height: 12),
             Container(
               child: Row(
                 children: [
@@ -52,20 +54,20 @@ class MyCard extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 14,
+              height: 12,
             ),
             Container(
               child: Row(
                 children: [
                   Text(
-                    job['monthlysalary'].toString(),
+                    job['monthly salary'].toString(),
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                   )
                 ],
               ),
             ),
             SizedBox(
-              height: 14,
+              height: 12,
             ),
             Container(
               child: Row(
@@ -77,15 +79,70 @@ class MyCard extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(
+              height: 12,
+            ),
+            Container(
+              child: Row(
+                children: [
+                   Text(
+                    job['joblocation'].toString(),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),)
+                   ],
+              ),
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            Container(
+              child: Row(
+                children: [
+                   Text(
+                    job['hiring process'].toString(),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),)
+                   ],
+              ),
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            Container(
+        child:Row(
+        children: [
+       Text(
+      job['jobdescription'].toString(),
+      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),
+    ),
+  ],
+) ,
+            ),
             SizedBox(height: 16.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 ElevatedButton(
-                  onPressed: () {
-                    // Navigator.push(context, MaterialPageRoute(builder: (context) => JobDetail(),));
+                  onPressed: () async {
+                   try {
+                    
+      User? user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        
+        String userId = user.uid;
+
+        
+        await JobApplicationRepository().applyForJob(userId, job);
+
+        
+      } else {
+        
+      }
+                   } catch (e) {
+                      print('Error applying for job: $e');
+                   }
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Applied Succesfully')));
                   },
-                  child: Column(
+                   child: Column(
                     children: [
                       Text(
                         'Apply',
